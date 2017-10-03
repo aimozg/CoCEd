@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -72,7 +73,9 @@ namespace CoCEd.ViewModel
             EyebrowPiercing = new PiercingVM(file, "eyebrow", PiercingLocation.Eyebrow);
             NipplesPiercing = new PiercingVM(file, "nipples", PiercingLocation.Nipples);
             TonguePiercing = new PiercingVM(file, "tongue", PiercingLocation.Tongue);
-
+            // vvv Xianxia
+            Skin = new SkinVM(file.GetObj("skin"));
+            // ^^^ Xianxia
 
             // Collections
             Cocks = new CockArrayVM(this, file.GetObj("cocks"));
@@ -219,7 +222,21 @@ namespace CoCEd.ViewModel
         public PiercingVM NipplesPiercing { get; private set; }
         public PiercingVM TonguePiercing { get; private set; }
         public PiercingVM LipPiercing { get; private set; }
+        // vvv Xianxia
+        public SkinVM Skin { get; private set; }
+        public string EyeColor
+        {
+            get { return GetString("eyeColor"); }
+            set { SetValue("eyeColor", value);  }
+        }
+        public bool UnlockedHeXinDao
+        {
+            get { return GetFlag(2294).AsInt() == 1; }
+            set { GetFlag(211).SetValue(value ? 1 : 0); }
+        }
 
+        // ^^^ Xianxia
+        
         public string Name
         {
             get { return GetString("short"); }
@@ -651,6 +668,8 @@ namespace CoCEd.ViewModel
             }
         }
 
+        // vvv Xianxia:excluded
+        /*
         public int SkinType
         {
             get { return GetInt("skinType"); }
@@ -678,7 +697,9 @@ namespace CoCEd.ViewModel
             get { return GetString("skinAdj"); }
             set { SetValue("skinAdj", value); }
         }
-
+        */
+        // ^^^ Xianxia:excluded
+                
         public int ArmType
         {
             get { return GetInt("armType"); }
@@ -1485,7 +1506,7 @@ namespace CoCEd.ViewModel
 
         public bool IsFurEnabled
         {
-            get { return SkinType == 1; }
+            get { return Skin.Coat.Type == 1 && Skin.Coverage > 0; }
         }
 
         public double Hunger
@@ -1638,5 +1659,39 @@ namespace CoCEd.ViewModel
             get { return GetInt("analWetness"); }
             set { SetValue("analWetness", value); }
         }
+    }
+
+    public sealed class SkinVM : ObjectVM
+    {
+        public SkinVM(AmfObject obj) : base(obj)
+        {
+            Base = new SkinLayerVM(this,obj.GetObj("base"));
+            Coat = new SkinLayerVM(this,obj.GetObj("coat"));            
+        }
+
+        internal void LayerPropertyChanged(SkinLayerVM layer, string property)
+        {
+            if (property== "Pattern") {
+                if (layer == Base) OnPropertyChanged("HasBaseWithPattern");
+                if (layer == Coat) OnPropertyChanged("HasCoatWithPattern");
+            }
+        }
+            
+        public SkinLayerVM Base { get; }
+        public SkinLayerVM Coat { get; }
+        public int Coverage
+        {
+            get => GetInt("coverage");
+            set
+            {
+                SetValue("coverage", value);
+                OnPropertyChanged("HasCoat");
+                OnPropertyChanged("HasCoatWithPattern");
+            }
+        }
+
+        public bool HasCoat => Coverage > 0;
+        public bool HasBaseWithPattern => Base.Pattern > 0;
+        public bool HasCoatWithPattern => HasCoat && Coat.Pattern > 0;
     }
 }

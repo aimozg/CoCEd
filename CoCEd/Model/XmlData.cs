@@ -124,6 +124,16 @@ namespace CoCEd.Model
 
     public sealed class XmlBodySet
     {
+        // vvv Xianxia
+        [XmlArray, XmlArrayItem("SkinCoverage")]
+        public XmlEnum[] SkinCoverages { get; set; }
+        [XmlArray, XmlArrayItem("SkinPattern")]
+        public XmlEnum[] SkinPatterns { get; set; }
+        [XmlArray, XmlArrayItem("SkinCoat")]
+        public XmlEnum[] SkinCoats { get; set; }
+        [XmlArray, XmlArrayItem("SkinBase")]
+        public XmlEnum[] SkinBases { get; set; }
+        // ^^^ Xianxia
         [XmlArray, XmlArrayItem("SkinType")]
         public XmlEnum[] SkinTypes { get; set; }
         [XmlArray, XmlArrayItem("SkinTone")]
@@ -147,6 +157,8 @@ namespace CoCEd.Model
         public XmlEnum[] TongueTypes { get; set; }
         [XmlArray, XmlArrayItem("EyeType")]
         public XmlEnum[] EyeTypes { get; set; }
+        [XmlArray, XmlArrayItem("EyeColor")]
+        public String[] EyeColors { get; set; }
         [XmlArray, XmlArrayItem("EarType")]
         public XmlEnum[] EarTypes { get; set; }
         [XmlArray, XmlArrayItem("HornType")]

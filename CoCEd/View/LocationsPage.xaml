@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:common="clr-namespace:CoCEd.Common"
+             xmlns:cocvm="clr-namespace:CoCEd.ViewModel"
              mc:Ignorable="d"
-             d:DesignWidth="1024" d:DesignHeight="600">
+             d:DesignWidth="1024" d:DesignHeight="600" d:DataContext="{d:DesignInstance cocvm:VM}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -97,6 +98,9 @@
                     <CheckBox Content="Salon" IsChecked="{Binding Game.UnlockedSalon}"/>
                     <CheckBox Content="Town Ruins" IsChecked="{Binding Game.UnlockedTownRuins}"/>
                     <CheckBox Content="Lake Boat" IsChecked="{Binding Game.UnlockedBoat}"/>
+                    <!--vvv Xianxia-->
+                    <CheckBox Content="He'Xin'Dao" IsChecked="{Binding Game.UnlockedHeXinDao}"/>
+                    <!--^^^ Xianxia-->
                 </UniformGrid>
 
                 <Border Style="{StaticResource HeaderBorder}" Margin="0,30,0,4">

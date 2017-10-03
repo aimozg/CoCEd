@@ -97,6 +97,7 @@
     <Compile Include="ViewModel\KeyItemVM.cs" />
     <Compile Include="ViewModel\PerkVM.cs" />
     <Compile Include="ViewModel\PiercingVM.cs" />
+    <Compile Include="ViewModel\SkinLayerVM.cs" />
     <Compile Include="ViewModel\StatusVM.cs" />
     <Compile Include="ViewModel\VaginaVM.cs" />
     <Compile Include="ViewModel\VM.cs" />

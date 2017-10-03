@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:common="clr-namespace:CoCEd.Common"
+             xmlns:cocvm="clr-namespace:CoCEd.ViewModel"
              mc:Ignorable="d" 
-             d:DesignWidth="1024" d:DesignHeight="600">
+             d:DesignWidth="1024" d:DesignHeight="600" d:DataContext="{d:DesignInstance cocvm:VM}">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -48,8 +49,8 @@
 
                     <TextBlock              Text="Frame"/>
                     <common:MyNumericBox    Value="{Binding Game.Frame}" Upper="100" Tip="{Binding Game.FrameTip}"/>
-
-                    <TextBlock              Text="Skin type"/>
+                    <!-- vvv Xianxia:excluded -->
+                    <!--<TextBlock              Text="Skin type"/>
                     <common:MyComboBox      SelectedValue="{Binding Game.SkinType}" ItemsSource="{Binding Data.Body.SkinTypes}"/>
 
                     <TextBlock              Text="Skin tone"/>
@@ -59,7 +60,8 @@
                     <ComboBox               Text="{Binding Game.SkinDescription}" ItemsSource="{Binding Data.Body.SkinDescriptions}" Style="{StaticResource EditableTextBox}"/>
 
                     <TextBlock              Text="Skin adjective"/>
-                    <ComboBox               Text="{Binding Game.SkinAdjective}" ItemsSource="{Binding Data.Body.SkinAdjectives}" Style="{StaticResource EditableTextBox}"/>
+                    <ComboBox               Text="{Binding Game.SkinAdjective}" ItemsSource="{Binding Data.Body.SkinAdjectives}" Style="{StaticResource EditableTextBox}"/>-->
+                    <!-- ^^^ Xianxia:excluded -->
                 </common:AutoGrid>
                 <common:AutoGrid IsEnabled="{Binding Game.IsRevamp}" Visibility="{Binding Game.RevampVisibility, FallbackValue={x:Static Visibility.Collapsed}}">
                     <TextBlock              Text="Fur color" IsEnabled="{Binding Game.IsFurEnabled}"/>
@@ -87,9 +89,55 @@
                     <CheckBox Content="Gills" IsChecked="{Binding Game.HasGills}" Margin="8,5,0,0"/>
                 </common:AutoGrid>
             </StackPanel>
-
-
+            
             <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical">
+                <Border Style="{StaticResource HeaderBorder}">
+                    <TextBlock Text="Skin" Style="{StaticResource Header}"/>
+                </Border>
+                <common:AutoGrid>
+                    <TextBlock              Text="Skin: base layer"/>
+                    <common:MyComboBox      SelectedValue="{Binding Game.Skin.Base.Type}" ItemsSource="{Binding Data.Body.SkinBases}"/>
+
+                    <TextBlock              Text="Base: color"/>
+                    <ComboBox               Text="{Binding Game.Skin.Base.Color}" ItemsSource="{Binding Data.Body.SkinTones}" Style="{StaticResource EditableTextBox}"/>
+                    
+                    <TextBlock              Text="Base: pattern"/>
+                    <common:MyComboBox      SelectedValue="{Binding Game.Skin.Base.Pattern}" ItemsSource="{Binding Data.Body.SkinPatterns}"/>
+
+                    <TextBlock              Text="Base secondary color"/>
+                    <ComboBox               Text="{Binding Game.Skin.Base.SecondaryColor}" ItemsSource="{Binding Data.Body.SkinTones}" Style="{StaticResource EditableTextBox}" IsEnabled="{Binding Game.Skin.HasBaseWithPattern}"/>
+
+                    <TextBlock              Text="Base description"/>
+                    <ComboBox               Text="{Binding Game.Skin.Base.Description}" ItemsSource="{Binding Data.Body.SkinDescriptions}" Style="{StaticResource EditableTextBox}"/>
+
+                    <TextBlock              Text="Base adjective"/>
+                    <ComboBox               Text="{Binding Game.Skin.Base.Adjective}" ItemsSource="{Binding Data.Body.SkinAdjectives}" Style="{StaticResource EditableTextBox}"/>
+                    
+                    <TextBlock              Text="Coat coverage"/>
+                    <common:MyComboBox      SelectedValue="{Binding Game.Skin.Coverage}" ItemsSource="{Binding Data.Body.SkinCoverages}"/>
+                    
+                    <TextBlock              Text="Coat layer"/>
+                    <common:MyComboBox      SelectedValue="{Binding Game.Skin.Coat.Type}" ItemsSource="{Binding Data.Body.SkinCoats}" IsEnabled="{Binding Game.Skin.HasCoat}"/>
+
+                    <TextBlock              Text="Coat color"/>
+                    <ComboBox               Text="{Binding Game.Skin.Coat.Color}" ItemsSource="{Binding Data.Body.SkinTones}" Style="{StaticResource EditableTextBox}" IsEnabled="{Binding Game.Skin.HasCoat}"/>
+                    
+                    <TextBlock              Text="Coat pattern"/>
+                    <common:MyComboBox      SelectedValue="{Binding Game.Skin.Coat.Pattern}" ItemsSource="{Binding Data.Body.SkinPatterns}" IsEnabled="{Binding Game.Skin.HasCoat}"/>
+
+                    <TextBlock              Text="Coat secondary color"/>
+                    <ComboBox               Text="{Binding Game.Skin.Coat.SecondaryColor}" ItemsSource="{Binding Data.Body.SkinTones}" Style="{StaticResource EditableTextBox}" IsEnabled="{Binding Game.Skin.HasCoatWithPattern}"/>
+
+                    <TextBlock              Text="Coat description"/>
+                    <ComboBox               Text="{Binding Game.Skin.Coat.Description}" ItemsSource="{Binding Data.Body.SkinDescriptions}" Style="{StaticResource EditableTextBox}" IsEnabled="{Binding Game.Skin.HasCoat}"/>
+
+                    <TextBlock              Text="Coat adjective"/>
+                    <ComboBox               Text="{Binding Game.Skin.Coat.Adjective}" ItemsSource="{Binding Data.Body.SkinAdjectives}" Style="{StaticResource EditableTextBox}" IsEnabled="{Binding Game.Skin.HasCoat}"/>
+                </common:AutoGrid>
+            </StackPanel>
+
+
+            <StackPanel Grid.Column="3" Grid.Row="1" Orientation="Vertical">
                 <Border Style="{StaticResource HeaderBorder}">
                     <TextBlock Text="Lower Body" Style="{StaticResource Header}"/>
                 </Border>
@@ -123,7 +171,7 @@
             </StackPanel>
 
 
-            <StackPanel Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Orientation="Vertical">
+            <StackPanel Grid.Column="3" Grid.Row="3" Orientation="Vertical">
                 <common:ArrayEditor Header="Breasts" Items="{Binding Game.Breasts}" Capacity="10">
                     <common:ArrayEditor.ItemTemplate>
                         <DataTemplate>

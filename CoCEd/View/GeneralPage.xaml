@@ -141,10 +141,13 @@
 
                     <TextBlock              Text="Tongue"/>
                     <common:MyComboBox      SelectedValue="{Binding Game.TongueType}" ItemsSource="{Binding Data.Body.TongueTypes}"/>
-
-                    <TextBlock              Text="Eyes"/>
+                    <!-- vvv Xianxia -->
+                    <TextBlock              Text="Eye type"/>
                     <common:MyComboBox      SelectedValue="{Binding Game.EyeType}" ItemsSource="{Binding Data.Body.EyeTypes}"/>
 
+                    <TextBlock              Text="Eye color"/>
+                    <ComboBox               SelectedValue="{Binding Game.EyeColor}" ItemsSource="{Binding Data.Body.EyeColors}" Style="{StaticResource EditableTextBox}"/>
+                    <!-- ^^^ Xianxia -->
                     <TextBlock              Text="Ears"/>
                     <common:MyComboBox      SelectedValue="{Binding Game.EarType}" ItemsSource="{Binding Data.Body.EarTypes}"/>
 
